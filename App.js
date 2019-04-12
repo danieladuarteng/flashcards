@@ -1,47 +1,61 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import NewDeck from './components/NewDeck';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import NewDeck from './components/NewDeck'
+
+class Decks extends React.Component {
+  render() {
+    const decks = [
+      {
+        deck: 'udacicards',
+        card: '3 cards'
+      },
+      {
+        deck: 'new deck',
+        card: '0 cards'
+      },
+      {
+        deck: 'New deck 2',
+        card: '0 cards'
+      },
+    ];
+
+    return (
+      <ScrollView style={styles.containerDeck}>
+        {decks.map(item => (
+          <View style={styles.decks} key={item.deck}>
+            <Text>{item.deck}</Text>
+            <Text>{item.card}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    );
+  }
+}
+
+const TabNavigator = createBottomTabNavigator({
+  Decks: Decks,
+  NewDeck: NewDeck,
+});
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-  },
-  column: {
-    width: '50%',
-    height: 50,
-    backgroundColor: '#000',
-    fontSize: 2,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  text: {
-    color: '#fff',
-    textAlign: 'center'
-  }
-});
-
-const nameColumns = [
-  {
-    name: 'DECKS',
+  containerDeck: {
+    flex: 1,
   },
-  {
-    name: 'NEW DECK',
+  decks: {
+    flex: 1,
+    paddingTop: 100,
+    paddingBottom: 100,
+    paddingLeft: 100,
+    paddingRight: 100,
+    borderColor: '#000000',
+    borderWidth: 2,
+    width: '100%',
   },
-];
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        {nameColumns.map(item => (
-          <View style={styles.column} key={item.name}>
-            <Text style={styles.text}>{item.name}</Text>
-          </View>
-        ))}
-        <NewDeck />
-      </View>
-    );
-  }
-}
+})
+export default createAppContainer(TabNavigator);
