@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    header: {
+    text: {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 30,
@@ -54,7 +54,7 @@ export default class NewDesck extends Component {
         const { text } = this.state
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
-                <Text style={styles.header}>What is the title of your new deck?</Text>
+                <Text style={styles.text}>What is the title of your new deck?</Text>
                 <View style={{ flexDirection: 'row', height: 40 }}>
                     <TextInput
                         value={text}

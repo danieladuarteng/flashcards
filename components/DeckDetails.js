@@ -64,7 +64,7 @@ export default class DeckDetails extends Component {
                     style={styles.buttonAddCard}
                     onPress={() => navigation.navigate('AddCard', { key: title })}
                 >
-                    <Text style={styles.buttonText}>Add Card</Text>
+                    <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>
                 {questionsLenght > 0
                     ?

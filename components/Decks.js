@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import * as api from '../utils/api'
+import {
+    Text,
+    View,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+} from 'react-native';
+import { getDecks } from '../utils/api'
 
 
 const styles = StyleSheet.create({
@@ -30,21 +36,21 @@ class Decks extends Component {
     }
 
     async componentDidMount() {
-        const decks = await api.getDecks()
+        const decks = await getDecks()
         this.setState({ decks })
     }
 
     render() {
         const { navigation } = this.props
         const { decks } = this.state
-        console.log(decks)
+
         return (
             <ScrollView style={styles.containerDeck}>
                 {decks && Object.keys(decks).map(item => (
                     <TouchableOpacity
                         key={decks[item].title}
-                        onPress={() => navigation.navigate('DeckDetails', 
-                        { title: item, questionsLenght: decks[item].questions.length })}
+                        onPress={() => navigation.navigate('DeckDetails',
+                            { title: item, questionsLenght: decks[item].questions.length })}
                     >
                         <View style={styles.decks} >
                             <Text>{decks[item].title}</Text>
