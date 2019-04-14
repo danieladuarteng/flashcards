@@ -2,8 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 8060,
+  "packagerPid": 7412,
   "expoServerNgrokUrl": "https://up-vd7.anonymous.flashcards.exp.direct",
   "packagerNgrokUrl": "https://packager.up-vd7.anonymous.flashcards.exp.direct",
-  "ngrokPid": 3588
+  "ngrokPid": 9168,
+  "webpackServerPort": null
 }
