@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { getDecks } from '../utils/api'
+
 
 const styles = StyleSheet.create({
     container: {
@@ -45,16 +47,26 @@ const styles = StyleSheet.create({
 })
 
 export default class DeckDetails extends Component {
+
+    state = {
+        decks: [],
+    }
+
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('title', 'Decks'),
+            title: navigation.getParam('title', 'Decks'),  
         }
+    }
+
+    async componentDidMount() {
+        const decks = await getDecks()
+        this.setState({decks})
     }
 
     render() {
         const { navigation } = this.props
         const { title, questionsLenght } = this.props.navigation.state.params
-        console.log('this.props', this.props)
+        console.log('getDecks', this.state.decks)
 
         return (
             <View style={styles.container}>
@@ -62,7 +74,7 @@ export default class DeckDetails extends Component {
                 <Text style={styles.questionsLenght}>{questionsLenght} cards </Text>
                 <TouchableOpacity
                     style={styles.buttonAddCard}
-                    onPress={() => navigation.navigate('AddCard', { key: title })}
+                    onPress={() => navigation.navigate('AddCard', { title, questionsLenght })}
                 >
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>

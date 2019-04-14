@@ -64,9 +64,26 @@ export default class AddCard extends Component {
         question: '',
     }
 
+    handleAddCard = () =>{
+        const { navigation } = this.props
+        const { title, questionsLenght } = this.props.navigation.state.params
+        const { answer, question } = this.state
+
+        const card = {
+            question,
+            answer
+        }
+
+        addCardToDeck(title, card)
+
+        navigation.navigate('DeckDetails', {title, questionsLenght: questionsLenght +1})
+
+    }
+
     render() {
         const { answer, question } = this.state
-        console.log('state', answer, question)
+        const { title, questionsLenght } = this.props.navigation.state.params
+        console.log( title, questionsLenght)
 
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
