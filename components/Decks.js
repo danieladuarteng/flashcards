@@ -1,5 +1,7 @@
-import React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import * as api from '../utils/api'
+
 
 const styles = StyleSheet.create({
     container: {
@@ -22,35 +24,40 @@ const styles = StyleSheet.create({
     },
 })
 
-class Decks extends React.Component {
-    render() {
-        const decks = [
-            {
-                deck: 'udacicards',
-                card: '3 cards'
-            },
-            {
-                deck: 'new deck',
-                card: '0 cards'
-            },
-            {
-                deck: 'New deck 2',
-                card: '0 cards'
-            },
-        ];
+class Decks extends Component {
+    state = {
+        decks: [],
+    }
 
+    async componentDidMount() {
+        const decks = await api.getDecks()
+        this.setState({ decks })
+    }
+
+    render() {
+        const { navigation } = this.props
+        const { decks } = this.state
+        console.log(decks)
         return (
             <ScrollView style={styles.containerDeck}>
-                {decks.map(item => (
-                    <View style={styles.decks} key={item.deck}>
-                        <Text>{item.deck}</Text>
-                        <Text>{item.card}</Text>
-                    </View>
+                {decks && Object.keys(decks).map(item => (
+                    <TouchableOpacity
+                        key={decks[item].title}
+                        onPress={() => navigation.navigate('DeckDetails', 
+                        { title: item, questionsLenght: decks[item].questions.length })}
+                    >
+                        <View style={styles.decks} >
+                            <Text>{decks[item].title}</Text>
+                            <Text>{decks[item].questions ? decks[item].questions.length : 0} cards</Text>
+                        </View>
+                    </TouchableOpacity>
+
                 ))}
             </ScrollView>
         );
 
     }
 }
+
 
 export default Decks
