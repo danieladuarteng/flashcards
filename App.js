@@ -5,6 +5,12 @@ import NewDeck from './components/NewDeck'
 import Decks from './components/Decks'
 import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
+import { createStore } from 'redux'
+import middleware from './middleware'
+
+const store = createStore(reducer, middleware)
 
 const TabNavigator = createAppContainer(createBottomTabNavigator({
   Decks: {
@@ -40,9 +46,11 @@ const Navigator = createAppContainer(createStackNavigator({
 class App extends Component {
   render() {
     return (
+      <Provider store={store}>
         <View style={{ flex: 1 }}>
           <Navigator />
         </View>
+        </Provider>
     )
   }
 }

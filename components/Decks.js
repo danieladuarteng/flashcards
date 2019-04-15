@@ -6,7 +6,9 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native';
-import { getDecks } from '../utils/api'
+
+import { handleInitialData } from '../actions/index'
+import { connect } from 'react-redux'
 
 
 const styles = StyleSheet.create({
@@ -31,18 +33,16 @@ const styles = StyleSheet.create({
 })
 
 class Decks extends Component {
-    state = {
-        decks: [],
-    }
-
-    async componentDidMount() {
-        const decks = await getDecks()
-        this.setState({ decks })
+ 
+    componentDidMount() {
+        const { dispatch } = this.props
+        dispatch(handleInitialData())
     }
 
     render() {
-        const { navigation } = this.props
-        const { decks } = this.state
+        const { navigation, decks } = this.props
+     
+        console.log('decks', this.props)
 
         return (
             <ScrollView style={styles.containerDeck}>
@@ -65,5 +65,11 @@ class Decks extends Component {
     }
 }
 
+function mapStateToProps (decks){
+    return{
+        decks,
+    }
+}
 
-export default Decks
+
+export default connect(mapStateToProps)(Decks)
