@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
 
 class Decks extends Component {
  
-    componentDidMount() {
+    async componentDidMount() {
         const { dispatch } = this.props
-        dispatch(handleInitialData())
+        await dispatch(handleInitialData())
     }
 
     render() {
