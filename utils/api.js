@@ -11,6 +11,18 @@ export const getDecks = async () => {
     }
 }
 
+export const getDeck = (id) => {
+    try {
+        return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+            .then(data => {
+                const decks = JSON.parse(data);
+                return decks[id]
+            })
+    } catch (e) {
+        console.log('erro na api getDeck', e)
+    }
+}
+
 export const addCardToDeck = (title, card) => {
     try {
         getDecks()
@@ -25,8 +37,26 @@ export const addCardToDeck = (title, card) => {
             }).then((newDecks) => {
                 AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
             })
-    }
-    catch (e) {
+    } catch (e) {
         console.log('erro na api addCardToDeck', e)
+    }
+}
+
+export const saveDeckTitle = (title) => {
+    try {
+        getDecks()
+            .then((decks) => {
+                return {
+                    ...decks,
+                    [title]: {
+                        title,
+                        questions: [],
+                    }
+                }
+            }).then((newDecks) => {
+                AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
+            })
+    } catch (e) {
+        console.log('erro na api saveDeckTitle', e)
     }
 }

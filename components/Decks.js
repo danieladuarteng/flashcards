@@ -65,7 +65,7 @@ class Decks extends Component {
     }
 }
 
-function mapStateToProps(decks) {
+function mapStateToProps({decks}) {
     return {
         decks,
     }

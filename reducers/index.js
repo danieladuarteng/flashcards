@@ -1,5 +1,6 @@
 import {
     RECEIVE_DECKS,
+    ADD_CARD,
 } from '../actions'
 
 export default function decks(state = {}, action) {
@@ -8,6 +9,19 @@ export default function decks(state = {}, action) {
             return {
                 ...state,
                 ...action.decks
+            }
+        case ADD_CARD:
+            const { title, card } = action
+            let data = state.decks
+            return {
+                ...state,
+                decks: {
+                    ...data,
+                    [title]: {
+                        title: title,
+                        questions: data[title].questions.concat([card])
+                    }
+                }
             }
         default:
             return state

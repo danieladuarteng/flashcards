@@ -54,13 +54,13 @@ export default class DeckDetails extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('title', 'Decks'),  
+            title: navigation.getParam('title', 'Decks'),
         }
     }
 
-    async componentDidMount() {
-        const decks = await getDecks()
-        this.setState({decks})
+    componentDidMount() {
+        const { dispatch, title } = this.props
+        dispatch(deckDetails(title))
     }
 
     render() {
