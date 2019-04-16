@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 })
 
 class Decks extends Component {
- 
+
     async componentDidMount() {
         const { dispatch } = this.props
         await dispatch(handleInitialData())
@@ -41,7 +41,7 @@ class Decks extends Component {
 
     render() {
         const { navigation, decks } = this.props
-     
+
         console.log('decks', this.props)
 
         return (
@@ -65,8 +65,8 @@ class Decks extends Component {
     }
 }
 
-function mapStateToProps (decks){
-    return{
+function mapStateToProps(decks) {
+    return {
         decks,
     }
 }
