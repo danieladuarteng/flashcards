@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { getDecks } from '../utils/api'
-
+import { handleDeckDetails } from '../actions/index'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     container: {
@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 35,
         fontWeight: 'bold',
-
     },
     questionsLenght: {
         marginTop: 30,
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class DeckDetails extends Component {
+class DeckDetails extends Component {
 
     state = {
         decks: [],
@@ -58,27 +57,26 @@ export default class DeckDetails extends Component {
         }
     }
 
-    componentDidMount() {
-        const { dispatch, title } = this.props
-        dispatch(deckDetails(title))
+    async componentDidMount() {
+        const { dispatch } = this.props
+        const { title } = this.props.navigation.state.params
+        await dispatch(handleDeckDetails(title))
     }
 
     render() {
-        const { navigation } = this.props
-        const { title, questionsLenght } = this.props.navigation.state.params
-        console.log('getDecks', this.state.decks)
+        const { navigation, title, questionsLength } = this.props
 
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>{title} </Text>
-                <Text style={styles.questionsLenght}>{questionsLenght} cards </Text>
+            return(
+                <View style={styles.container}>
+                    <Text style={styles.title}>{title} </Text>
+                <Text style={styles.questionsLenght}>{questionsLength} cards </Text>
                 <TouchableOpacity
                     style={styles.buttonAddCard}
-                    onPress={() => navigation.navigate('AddCard', { title, questionsLenght })}
+                    onPress={() => navigation.navigate('AddCard', { title, questionsLength })}
                 >
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>
-                {questionsLenght > 0
+                {questionsLength > 0
                     ?
                     (
                         <TouchableOpacity
@@ -90,8 +88,18 @@ export default class DeckDetails extends Component {
                     )
                     : null
                 }
-            </View>
-
-        )
+                </View>
+            )
     }
 }
+
+function mapStateToProps({ deck }) {
+    return {
+        deck,
+        title: deck.deck && deck.deck.title,
+        questionsLength: deck.deck && deck.deck.questions.length,
+    }
+}
+
+
+export default connect(mapStateToProps)(DeckDetails)

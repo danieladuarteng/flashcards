@@ -2,6 +2,7 @@ import {
     getDecks,
     addCardToDeck,
     saveDeckTitle,
+    getDeck,
 } from '../utils/api'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
@@ -25,10 +26,10 @@ export function handleInitialData() {
     }
 }
 
-export function deckDetails(id) {
+export function deckDetails(deck) {
     return {
         type: DECK_DETAILS,
-        id,
+        deck,
     }
 }
 
