@@ -72,7 +72,7 @@ class DeckDetails extends Component {
                 <Text style={styles.questionsLenght}>{questionsLength} cards </Text>
                 <TouchableOpacity
                     style={styles.buttonAddCard}
-                    onPress={() => navigation.navigate('AddCard', { title, questionsLength })}
+                    onPress={() => navigation.navigate('AddCard', { title })}
                 >
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>

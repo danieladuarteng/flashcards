@@ -1,6 +1,10 @@
 import { AsyncStorage } from 'react-native'
 import { DECKS_STORAGE_KEY, formatDecksResults } from './_decks'
 
+export const clearDecks = () => {
+    return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
+}
+
 export const getDecks = async () => {
     try {
         const result = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
@@ -23,7 +27,7 @@ export const getDeck = (id) => {
     }
 }
 
-export const addCardToDeck = (title, card) => {
+export const addCardToDeck = (card, title) => {
     try {
         getDecks()
             .then((decks) => {

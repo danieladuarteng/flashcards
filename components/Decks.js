@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { handleInitialData } from '../actions/index'
+import {clearDecks} from '../utils/api'
 import { connect } from 'react-redux'
 
 
@@ -34,9 +35,11 @@ const styles = StyleSheet.create({
 
 class Decks extends Component {
 
-    async componentDidMount() {
+    componentDidMount() {
         const { dispatch } = this.props
-        await dispatch(handleInitialData())
+        ///await dispatch(handleInitialData())
+        //clearDecks()
+        dispatch(handleInitialData())
     }
 
     render() {
