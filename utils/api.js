@@ -50,7 +50,7 @@ export const addCardToDeck = (card, title) => {
 
 export const saveDeckTitle = (title) => {
     try {
-        getDecks()
+        return getDecks()
             .then((decks) => {
                 return {
                     ...decks,
@@ -61,6 +61,7 @@ export const saveDeckTitle = (title) => {
                 }
             }).then((newDecks) => {
                 AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
+                return newDecks
             })
     } catch (e) {
         console.log('erro na api saveDeckTitle', e)

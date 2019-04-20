@@ -7,6 +7,8 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
 } from 'react-native';
+import { handleNewDeck } from '../actions'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     container: {
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default class NewDesck extends Component {
+class NewDesck extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -50,23 +52,39 @@ export default class NewDesck extends Component {
         };
     }
 
+    handleNewDeck = () => {
+        const { navigation, dispatch } = this.props
+
+        const { title } = this.state
+
+        dispatch(handleNewDeck(title))
+
+        navigation.navigate('Decks')
+    }
+
+
     render() {
-        const { text } = this.state
+        const { title } = this.state
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
                 <Text style={styles.text}>What is the title of your new deck?</Text>
                 <View style={{ flexDirection: 'row', height: 40 }}>
                     <TextInput
-                        value={text}
+                        value={title}
                         style={styles.input}
                         placeholder="Deck title"
-                        onChangeText={(text) => this.setState({ text })}
+                        onChangeText={(title) => this.setState({ title })}
                     />
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={this.handleNewDeck}
+                >
                     <Text style={styles.buttonText}>Submit </Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         );
     }
 }
+
+export default connect()(NewDesck)

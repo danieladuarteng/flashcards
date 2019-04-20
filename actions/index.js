@@ -59,10 +59,10 @@ export function handleAddCard(card, title) {
     }
 }
 
-export function newDeck(title) {
+export function newDeck(decks) {
     return {
         type: NEW_DECK,
-        title,
+        decks,
     }
 }
 

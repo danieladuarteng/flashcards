@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 35,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     questionsLenght: {
