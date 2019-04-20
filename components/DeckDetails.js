@@ -57,22 +57,23 @@ class DeckDetails extends Component {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const { dispatch } = this.props
         const { title } = this.props.navigation.state.params
-        await dispatch(handleDeckDetails(title))
+        dispatch(handleDeckDetails(title))
     }
 
     render() {
         const { navigation, title, questionsLength } = this.props
+        const { questionsLenghtUpdate } = this.props.navigation.state.params
 
             return(
                 <View style={styles.container}>
                     <Text style={styles.title}>{title} </Text>
-                <Text style={styles.questionsLenght}>{questionsLength} cards </Text>
+                <Text style={styles.questionsLenght}>{questionsLenghtUpdate || questionsLength} cards </Text>
                 <TouchableOpacity
                     style={styles.buttonAddCard}
-                    onPress={() => navigation.navigate('AddCard', { title })}
+                    onPress={() => navigation.navigate('AddCard', { title, questionsLength })}
                 >
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>
@@ -100,6 +101,5 @@ function mapStateToProps({ deck }) {
         questionsLength: deck.deck && deck.deck.questions.length,
     }
 }
-
 
 export default connect(mapStateToProps)(DeckDetails)

@@ -7,8 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import { addCard, handleAddCard } from '../actions'
-import {addCardToDeck} from '../utils/api'
+import { handleAddCard } from '../actions'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -68,27 +67,25 @@ class AddCard extends Component {
 
     handleAddCard = () => {
         const { navigation, dispatch } = this.props
-        const { title } = this.props.navigation.state.params
+        const { title, questionsLength } = this.props.navigation.state.params
+        const questionsLenghtUpdate = questionsLength + 1
         const { answer, question } = this.state
 
         const card = {
             question,
-            answer
+            answer,
         }
 
         dispatch(handleAddCard(card, title))
 
-        //addCardToDeck(card, title)
-
-        navigation.navigate('DeckDetails', { title })
-
+        navigation.navigate('DeckDetails', { title, questionsLenghtUpdate})
     }
-
+ 
     render() {
         const { answer, question } = this.state
         const { title, questionsLenght } = this.props.navigation.state.params
         console.log(answer, question)
-        console.log(this.props)
+        console.log('props add',this.props)
 
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>

@@ -42,20 +42,19 @@ export function handleDeckDetails(id) {
     }
 }
 
-export function addCard(card, title) {
+export function addCard(deck) {
     return {
         type: ADD_CARD,
-        title,
-        card,
+        deck
     }
 }
 
 export function handleAddCard(card, title) {
     return (dispatch) => {
         addCardToDeck(card, title)
-            .then((resp) => {
-                dispatch(addCard(resp))
-                console.log('resp', resp)
+            .then((response) => {
+                dispatch(addCard(response))
+                console.log('responde action', response)
             })
     }
 }

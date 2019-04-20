@@ -29,18 +29,20 @@ export const getDeck = (id) => {
 
 export const addCardToDeck = (card, title) => {
     try {
-        getDecks()
+        return getDecks()
             .then((decks) => {
-                return {
-                    ...decks,
-                    [title]: {
-                        title,
-                        questions: decks[title].questions.concat([card])
-                    }
+                const updateDeck = {
+                    ...decks[title],
+                    questions: decks[title].questions.concat([card])
                 }
-            }).then((newDecks) => {
+
+                const newDecks = {
+                    ...decks,
+                    [title]: updateDeck,
+                }
                 AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
-            })
+                return newDecks
+            })   
     } catch (e) {
         console.log('erro na api addCardToDeck', e)
     }
