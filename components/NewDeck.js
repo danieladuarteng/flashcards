@@ -62,7 +62,6 @@ class NewDesck extends Component {
         navigation.navigate('DeckDetails', { title })
     }
 
-
     render() {
         const { title } = this.state
         return (

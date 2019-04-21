@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { handleInitialData } from '../actions/index'
-import { clearDecks } from '../utils/api'
 import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
@@ -35,15 +34,11 @@ class Decks extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props
-        ///dispatch(handleInitialData())
-        //clearDecks()
         dispatch(handleInitialData())
     }
 
     render() {
         const { navigation, decks } = this.props
-
-        console.log('deckshome', this.props)
 
         return (
             <ScrollView style={styles.containerDeck}>

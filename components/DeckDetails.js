@@ -48,10 +48,6 @@ const styles = StyleSheet.create({
 
 class DeckDetails extends Component {
 
-    state = {
-        decks: [],
-    }
-
     static navigationOptions = ({ navigation }) => {
         return {
             title: navigation.getParam('title', 'Decks'),
@@ -74,7 +70,7 @@ class DeckDetails extends Component {
     }
 
     render() {
-        const { navigation, deck } = this.props
+        const { navigation } = this.props
         const { title } = this.props.navigation.state.params
         const { questions } = this.props.deck
         const questionsDeck = questions && questions
@@ -103,7 +99,7 @@ class DeckDetails extends Component {
                     )
                     : null
                 }
-            </View >
+            </View>
         )
     }
 }

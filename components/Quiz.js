@@ -144,6 +144,7 @@ class Quiz extends Component {
         const { title } = this.props.navigation.state.params
         const { deck, navigation } = this.props
         const { questions } = deck
+
         return (
             <View>
                 {isLastCard === false

@@ -67,8 +67,7 @@ class AddCard extends Component {
 
     handleAddCard = () => {
         const { navigation, dispatch } = this.props
-        const { title, questionsLength } = this.props.navigation.state.params
-        const questionsLenghtUpdate = questionsLength ? questionsLength + 1 : 1
+        const { title } = this.props.navigation.state.params
         const { answer, question } = this.state
 
         const card = {
@@ -80,12 +79,9 @@ class AddCard extends Component {
 
         navigation.navigate('DeckDetails', { title })
     }
- 
+
     render() {
         const { answer, question } = this.state
-        const { title, questionsLenght } = this.props.navigation.state.params
-        console.log(answer, question)
-        console.log('props add', this.props)
 
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
