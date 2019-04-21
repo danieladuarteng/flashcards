@@ -10,6 +10,7 @@ import reducer from './reducers'
 import { createStore } from 'redux'
 import middleware from './middleware'
 import Quiz from './components/Quiz';
+import { setLocalNotification} from './utils/notifications'
 
 const store = createStore(reducer, middleware)
 
@@ -48,6 +49,11 @@ const Navigator = createAppContainer(createStackNavigator({
 
 
 class App extends Component {
+
+  componentDidMount () {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { handleDeckDetails } from '../actions/index'
 import { connect } from 'react-redux'
-import { AppLoading } from 'expo'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 const styles = StyleSheet.create({
     container: {
@@ -64,6 +64,15 @@ class DeckDetails extends Component {
         dispatch(handleDeckDetails(title))
     }
 
+    handleStartQuiz = () => {
+        const { title, navigation } = this.props
+
+        clearLocalNotification()
+            .then(setLocalNotification)
+
+        navigation.navigate('Quiz', { title })
+    }
+
     render() {
         const { navigation, deck } = this.props
         const { title } = this.props.navigation.state.params
@@ -71,12 +80,9 @@ class DeckDetails extends Component {
         const questionsDeck = questions && questions
         const questionsLength = questionsDeck && questionsDeck.length
 
-        console.log(questionsDeck)
-        console.log(questionsLength)
-        console.log(this.props)
-       
+
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <Text style={styles.title}>{title} </Text>
                 <Text style={styles.questionsLength}>{questionsLength === undefined ? 0 : questionsLength} cards </Text>
                 <TouchableOpacity
@@ -86,18 +92,18 @@ class DeckDetails extends Component {
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>
                 {questionsLength > 0
-                        ?
-                        (
-                            <TouchableOpacity
-                                style={styles.buttonStartQuiz}
-                                onPress={() => navigation.navigate('Quiz', { title })}
-                            >
-                                <Text style={styles.buttonText}>Start Quiz</Text>
-                            </TouchableOpacity>
-                        )
-                        : null
+                    ?
+                    (
+                        <TouchableOpacity
+                            style={styles.buttonStartQuiz}
+                            onPress={this.handleStartQuiz}
+                        >
+                            <Text style={styles.buttonText}>Start Quiz</Text>
+                        </TouchableOpacity>
+                    )
+                    : null
                 }
-            </View>
+            </View >
         )
     }
 }
