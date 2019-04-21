@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { createStore } from 'redux'
 import middleware from './middleware'
+import Quiz from './components/Quiz';
 
 const store = createStore(reducer, middleware)
 
@@ -39,6 +40,9 @@ const Navigator = createAppContainer(createStackNavigator({
   },
   AddCard: {
     screen: AddCard,
+  },
+  Quiz: {
+    screen: Quiz,
   },
 }));
 

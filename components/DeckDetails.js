@@ -90,7 +90,7 @@ class DeckDetails extends Component {
                         (
                             <TouchableOpacity
                                 style={styles.buttonStartQuiz}
-                                onPress={this.startQuiz}
+                                onPress={() => navigation.navigate('Quiz', { title })}
                             >
                                 <Text style={styles.buttonText}>Start Quiz</Text>
                             </TouchableOpacity>
