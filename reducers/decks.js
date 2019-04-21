@@ -14,7 +14,7 @@ export default function decks(state = {}, action) {
         case ADD_CARD:
             return {
                 ...state,
-                ...action.deck
+                [action.deck.title]: action.deck
             }
         case NEW_DECK:
             return {

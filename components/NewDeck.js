@@ -59,7 +59,7 @@ class NewDesck extends Component {
 
         dispatch(handleNewDeck(title))
 
-        navigation.navigate('Decks')
+        navigation.navigate('DeckDetails', { title })
     }
 
 

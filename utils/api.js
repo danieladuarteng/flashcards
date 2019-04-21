@@ -41,7 +41,7 @@ export const addCardToDeck = (card, title) => {
                     [title]: updateDeck,
                 }
                 AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks))
-                return newDecks
+                return updateDeck
             })   
     } catch (e) {
         console.log('erro na api addCardToDeck', e)

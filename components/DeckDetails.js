@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { handleDeckDetails } from '../actions/index'
 import { connect } from 'react-redux'
+import { AppLoading } from 'expo'
 
 const styles = StyleSheet.create({
     container: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
-    questionsLenght: {
+    questionsLength: {
         marginTop: 30,
         marginBottom: 30,
         fontSize: 20,
@@ -64,41 +65,46 @@ class DeckDetails extends Component {
     }
 
     render() {
-        const { navigation, title, questionsLength } = this.props
-        const { questionsLenghtUpdate } = this.props.navigation.state.params
+        const { navigation, deck } = this.props
+        const { title } = this.props.navigation.state.params
+        const { questions } = this.props.deck
+        const questionsDeck = questions && questions
+        const questionsLength = questionsDeck && questionsDeck.length
 
-            return(
-                <View style={styles.container}>
-                    <Text style={styles.title}>{title} </Text>
-                <Text style={styles.questionsLenght}>{questionsLenghtUpdate || questionsLength} cards </Text>
+        console.log(questionsDeck)
+        console.log(questionsLength)
+        console.log(this.props)
+       
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>{title} </Text>
+                <Text style={styles.questionsLength}>{questionsLength === undefined ? 0 : questionsLength} cards </Text>
                 <TouchableOpacity
                     style={styles.buttonAddCard}
-                    onPress={() => navigation.navigate('AddCard', { title, questionsLength })}
+                    onPress={() => navigation.navigate('AddCard', { title })}
                 >
                     <Text style={styles.buttonText}>Add Card </Text>
                 </TouchableOpacity>
                 {questionsLength > 0
-                    ?
-                    (
-                        <TouchableOpacity
-                            style={styles.buttonStartQuiz}
-                            onPress={this.startQuiz}
-                        >
-                            <Text style={styles.buttonText}>Start Quiz</Text>
-                        </TouchableOpacity>
-                    )
-                    : null
+                        ?
+                        (
+                            <TouchableOpacity
+                                style={styles.buttonStartQuiz}
+                                onPress={this.startQuiz}
+                            >
+                                <Text style={styles.buttonText}>Start Quiz</Text>
+                            </TouchableOpacity>
+                        )
+                        : null
                 }
-                </View>
-            )
+            </View>
+        )
     }
 }
 
 function mapStateToProps({ deck }) {
     return {
         deck,
-        title: deck.deck && deck.deck.title,
-        questionsLength: deck.deck && deck.deck.questions.length,
     }
 }
 

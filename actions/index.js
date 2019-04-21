@@ -54,7 +54,6 @@ export function handleAddCard(card, title) {
         addCardToDeck(card, title)
             .then((response) => {
                 dispatch(addCard(response))
-                console.log('responde action', response)
             })
     }
 }
