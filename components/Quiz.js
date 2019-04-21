@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { handleDeckDetails } from '../actions'
 
 const styles = StyleSheet.create({
     header: {
@@ -102,11 +103,19 @@ class Quiz extends Component {
         }
     }
 
+    componentDidMount() {
+        const { dispatch } = this.props
+        const { title } = this.props.navigation.state.params
+        dispatch(handleDeckDetails(title))
+    }
+
     componentWillUpdate(newProps, newState) {
         console.log('newProps', newProps)
         console.log('newState', newState)
         return newState
     }
+
+    
 
     handleChangeSide = () => {
         this.setState(({ isQuestion }) => ({
@@ -139,11 +148,13 @@ class Quiz extends Component {
             score: 0,
         })
     }
+
     render() {
         const { index, isQuestion, isLastCard, score } = this.state
         const { title } = this.props.navigation.state.params
         const { deck, navigation } = this.props
-        const { questions } = deck
+        const questions = deck !== undefined && deck.questions
+        const questionsLength = questions !== undefined && questions.length
 
         return (
             <View>
@@ -151,12 +162,12 @@ class Quiz extends Component {
                     ? (
                         <View>
                             <View style={styles.header}>
-                                <Text>{`${index + 1} / ${questions.length}`}</Text>
+                                <Text>{`${index + 1} / ${questionsLength}`}</Text>
                             </View>
                             {isQuestion ?
                                 (
                                     <View style={styles.container}>
-                                        <Text style={styles.content}>{questions[index].question} </Text>
+                                        <Text style={styles.content}>{questions && questions[index].question} </Text>
                                         <TouchableOpacity onPress={this.handleChangeSide}>
                                             <Text style={styles.side}>Show answer </Text>
                                         </TouchableOpacity>
@@ -165,9 +176,7 @@ class Quiz extends Component {
                                 (
                                     <View>
                                         <View style={styles.container}>
-                                            <Text style={styles.content}>
-                                                {questions[index].answer}
-                                            </Text>
+                                            <Text style={styles.content}>{questions && questions[index].answer} </Text>
                                             <TouchableOpacity onPress={this.handleChangeSide}>
                                                 <Text style={styles.side}>Show question </Text>
                                             </TouchableOpacity>
@@ -194,11 +203,11 @@ class Quiz extends Component {
                     (
                         <View style={styles.containerResult}>
                             <Text style={styles.score}>{(score / questions.length * 100).toFixed(0)} % </Text>
-                            <Text style={styles.underScoreText}>Correct !!!</Text>
+                            <Text style={styles.underScoreText}>Correct !!! </Text>
                             <TouchableOpacity
                                 style={styles.buttonResetQuiz}
                                 onPress={this.handleRestartQuiz}>
-                                <Text style={styles.buttonText}>Restart Quiz</Text>
+                                <Text style={styles.buttonText}>Restart Quiz </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.buttonBackDeck}
@@ -216,10 +225,9 @@ class Quiz extends Component {
 }
 
 
-function mapStateToProps({ decks }, props) {
-    const { title } = props.navigation.state.params
+function mapStateToProps({ deck }) {
     return {
-        deck: decks[title]
+        deck,
     }
 }
 

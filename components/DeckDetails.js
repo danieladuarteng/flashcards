@@ -54,14 +54,15 @@ class DeckDetails extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { dispatch } = this.props
         const { title } = this.props.navigation.state.params
-        dispatch(handleDeckDetails(title))
+        await dispatch(handleDeckDetails(title))
     }
 
     handleStartQuiz = () => {
-        const { title, navigation } = this.props
+        const { navigation } = this.props
+        const { title } = this.props.navigation.state.params
 
         clearLocalNotification()
             .then(setLocalNotification)
@@ -70,9 +71,9 @@ class DeckDetails extends Component {
     }
 
     render() {
-        const { navigation } = this.props
-        const { title } = this.props.navigation.state.params
+        const { navigation, deck } = this.props
         const { questions } = this.props.deck
+        const { title } = this.props.navigation.state.params
         const questionsDeck = questions && questions
         const questionsLength = questionsDeck && questionsDeck.length
 
