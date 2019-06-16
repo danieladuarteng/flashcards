@@ -1,5 +1,7 @@
 # Flashcards
 
+![](flashcards.gif)
+
 This is the third project of the Nanodegree React Developer course, from Udacity Brasil
 
 The goal is to create one app of flashcards, for create decks and cards for study
